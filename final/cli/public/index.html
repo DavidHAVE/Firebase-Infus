@@ -1,0 +1,144 @@
+<html>
+<head>
+	<title>Weight Control</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" href="css/foundation.min.css">
+	<link rel="stylesheet" href="foundation-icons/foundation-icons.css">
+	<link rel="stylesheet" href="webicons-master/webicons.css">
+	<link rel="stylesheet" href="responsive-tables/responsive-tables.css">
+	<script src="js/vendor/modernizr.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyARE3eu9rm_pRHaWrG5rGtdMYqoYbb7UiE",
+      authDomain: "infus-1621a.firebaseapp.com",
+      databaseURL: "https://infus-1621a.firebaseio.com",
+      projectId: "infus-1621a",
+      storageBucket: "infus-1621a.appspot.com",
+      messagingSenderId: "66475965525"
+    };
+    firebase.initializeApp(config);
+  </script>
+<!-- 	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCdpmXtmPzfk8x2k6d464ck3W2CKpzA_aU",
+      authDomain: "weightcontrol-f645f.firebaseapp.com",
+      databaseURL: "https://weightcontrol-f645f.firebaseio.com",
+      storageBucket: "weightcontrol-f645f.appspot.com",
+      messagingSenderId: "889264958286"
+    };
+    firebase.initializeApp(config);
+  </script> -->
+	<script type="text/javascript">
+    /**
+     * Handles the sign in button press.
+     */
+    function toggleSignIn() {
+      if (firebase.auth().currentUser) {
+        // [START signout]
+        firebase.auth().signOut();
+        // [END signout]
+      } else {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        if (email.length < 4) {
+          alert('Please enter an email address.');
+          return;
+        }
+        if (password.length < 4) {
+          alert('Please enter a password.');
+          return;
+        }
+        // Sign in with email and pass.
+        // [START authwithemail]
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+          document.getElementById('quickstart-sign-in').disabled = false;
+          // [END_EXCLUDE]
+        });
+        // [END authwithemail]
+      }
+      document.getElementById('quickstart-sign-in').disabled = true;
+    }
+
+
+    /**
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+    function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          var email = user.email;
+          var uid = user.uid;
+		           window.location.href = "food.html"
+          document.getElementById('quickstart-sign-in').textContent = 'Sign out';
+        } else {
+          // User is signed out.
+          // [START_EXCLUDE]
+          document.getElementById('quickstart-sign-in').textContent = 'Sign in';
+          // [END_EXCLUDE]
+        }
+        // [START_EXCLUDE silent]
+        document.getElementById('quickstart-sign-in').disabled = false;
+        // [END_EXCLUDE]
+      });
+      // [END authstatelistener]
+      document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+    }
+    window.onload = function() {
+      initApp();
+    };
+  </script>
+</head>
+<body>
+<div class="row" style="margin-top:120px">
+	<div class="columns large-8 large-centered">
+		<div class="panel clearfix" style="background:#333333">
+			<h3 style="color:white">Weight Control</h3>
+			<hr>
+			<div class="row collapse">
+				<div class="columns large-2">
+					<span class="prefix"><i class="fi-torso-business" style="
+					font-size:35px"></i></span>
+				</div>
+				<div class="columns large-10">
+					<input type="text" placeholder="Email" name="email" id="email" required>
+				</div>
+			</div>
+			<div class="row collapse">
+				<div class="columns large-2">
+					<label class="prefix"><i class="fi-key" style="font-size:35px;"></i></label>
+				</div>
+				<div class="columns large-10">
+					<input type="password" placeholder="Password" name="password" id="password" required>
+				</div>
+			</div>
+				<input type="reset" value="Ulang" class="button warning right small">
+				<button id="quickstart-sign-in" name="signin">Sign In</button>
+		</div>
+	</div>
+</div>
+<script src="js/vendor/jquery.js"></script>
+	<script src="js/foundation.min.js"></script>
+	<script src="responsive-tables/responsive-tables.js"></script>
+	<script>
+	$(document).foundation();
+	</script>
+</body>
+</html>

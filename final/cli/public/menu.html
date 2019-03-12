@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weight Control</title>
+  <link rel="stylesheet" href="css/foundation.css" />
+  <script src="js/vendor/modernizr.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCdpmXtmPzfk8x2k6d464ck3W2CKpzA_aU",
+      authDomain: "weightcontrol-f645f.firebaseapp.com",
+      databaseURL: "https://weightcontrol-f645f.firebaseio.com",
+      storageBucket: "weightcontrol-f645f.appspot.com",
+      messagingSenderId: "889264958286"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script type="text/javascript">
+  // Returns true if user is signed-in. Otherwise false and displays a message.
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          alert('user ada')
+        } else {
+          // No user is signed in.
+          alert('user null')
+          window.location.href = "index.html"
+        }
+      });
+
+  function userLogout(){
+    if (firebase.auth().currentUser) {
+      // [START signout]
+      firebase.auth().signOut();
+      alert('logout')
+      // [END signout]
+    }
+  }
+
+  //  document.getElementById('logout').addEventListener('click', userLogout, false);
+    window.onload = function() {
+  //    initApp();
+    };
+    </script>
+
+</head>
+<body>
+  <div class="off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+
+    <nav class="tab-bar show-for-small">
+      <section class="tab-bar-section">
+        <img src="" style="margin-left:50px">
+      </section>
+      <section class="left-small">
+        <a class="left-off-canvas-toggle menu-icon"
+        href="#"><span></span></a>
+      </section>
+    </nav>
+
+    <!-- top bar -->
+  <div class="sticky">
+  <nav class="top-bar hide-for-small" data-topbar role="navigation">
+    <ul class="title-area">
+      <li class="name">
+        <h1><a class="#">Weight Control</a></h1>
+      </li>
+      <!-- <li class="toggle-topbar menu-icon">
+        <a href="#"><span>Menu</span></a>
+      </li> -->
+    </ul>
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="active" onclick="userLogout()"><a href="index.html">Logout</a></li>
+      </ul>
+    </section>
+  </nav>
+</div>
+
+<aside class="left-off-canvas-menu">
+  <ul class="off-canvas-list">
+    <li><a href="food.html"><img src="img/calory2_50.png"> Makanan</a></li>
+    <li><a href="tips.html"><img src="img/tips_50.png"> Tips</a></li>
+    <li><a href="#" style="background:#008CBA"><img src="img/menu_50.png"> Menu</a></li>
+    <li onclick="userLogout()"><a href="index.html"><img src="img/out_50.png"> Log Out</a></li>
+  </ul>
+</aside>
+
+
+<section class="main-section">
+  <aside class="columns medium-3 large-2 hide-for-small"
+  style="position:fixed; padding:0; height:100%">
+  <!-- <div class="hide-for-small-only"> -->
+  <div class="icon-bar three-up vertical">
+
+    <a class="item" href="food.html">
+      <img src="img/calory2_50.png">
+      <label>Makanan</label>
+    </a>
+    <a class="item" href="tips.html">
+      <img src="img/tips_50.png">
+      <label>Tips</label>
+    </a>
+    <a class="item active" href="#">
+      <img src="img/menu_50.png">
+      <label>Menu</label>
+    </a>
+  </div>
+
+</aside>
+
+<content class="columns medium-9 medium-offset-3 large-10 large-offser-2">
+  <div style="min-height:400px">
+
+    <div class="row" style="margin-top:20px">
+    	<div class="columns large-12">
+    		<h3><i class="fi-page-edit"></i>&nbsp; Tambah Menu</h3>
+    	</div>
+    </div>
+
+    <div class="row">
+    <div class="columns large-12">
+      <!-- form -->
+    <form id="image-form" action="#" data-abide>
+    <table width="100%">
+      <tr>
+    		<td>Tipe Menu</td>
+    		<td>
+    			<div id="tm" class="columns medium-6">
+            <input type="radio" name="tipeMakanan" value="0" id="1">
+            <label for="1">Brakfast</label>
+            <input type="radio" name="tipeMakanan" value="1" id="2" checked>
+            <label for="2">Lunch</label>
+            <input type="radio" name="tipeMakanan" value="2" id="3">
+            <label for="3">Dinner</label>
+    			</div>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>Judul</td>
+    		<td>
+    			<div class="columns medium-6">
+    				<input type="text" id="judulInput" placeholder="Judul" required>
+            <small class="error">Judul harus diisi</small>
+    			</div>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>Informasi</td>
+    		<td>
+    			<div class="columns medium-6">
+    				<input type="text" id="informasiInput" placeholder="Informasi" required>
+            <small class="error">Informasi harus diisi</small>
+    			</div>
+    		</td>
+    	</tr>
+      <tr>
+        <td>Gambar</td>
+        <td>
+          <div class="columns medium-6">
+            <input id="mediaCapture" type="file" hidden accept="image/*,capture=camera">
+            <small class="error">Gambar harus ditambah</small>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div class="row">
+      <div class="columns large-7 medium-12">
+    	<input type="reset" value="Reset" class="button small right warning">
+      <button id="submitImage" enabled type="submit" title="Add an image">
+        Send
+      </button>
+</div>
+</div
+    </form>
+    </div>
+    </div>
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th>Nama</th>
+      <th>Kalori</th>
+      <th>Karbohidrat</th>
+      <th>Protein</th>
+      <th>Lemak</th>
+      <th>Kualitas</th>
+    </tr>
+  </thead>
+</table> -->
+
+</div>
+<div style="clear:both"></div>
+
+<footer>
+  <hr>
+  <p align="center"></p>
+</footer>
+</content>
+
+</section>
+<a class="exit-off-canvas"></a>
+</div>
+</div>
+<!-- </div> -->
+
+<script src="scripts/menu.js"></script>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+  $(document).foundation();
+</script>
+
+</body>
+</html>
